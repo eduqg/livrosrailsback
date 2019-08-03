@@ -16,9 +16,10 @@ class AutorsController < ApplicationController
   # POST /autors
   def create
     @autor = Autor.new(autor_params)
-
+    #Esse autors foi inserido para retornar ao front apos a criação de um autor todos os autores atuais
+    @autors = Autor.all
     if @autor.save
-      render json: @autor, status: :created, location: @autor
+      render json: @autors, status: :created, location: @autor
     else
       render json: @autor.errors, status: :unprocessable_entity
     end
