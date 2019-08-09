@@ -4,8 +4,19 @@ class LivrosController < ApplicationController
   # GET /livros
   def index
     @livros = Livro.all
-
-    render json: @livros
+    resp = []
+    @livros.each do | livro |
+      resp.push(
+        id:livro.id,
+        preco:livro.preco,
+        titulo:livro.titulo,
+        autor_id:livro.autor_id,
+        created_at:livro.created_at,
+        updated_at:livro.updated_at,
+        autor_name:livro.autor.nome
+      )
+    end
+    render json: resp
   end
 
   # GET /livros/1
@@ -19,7 +30,19 @@ class LivrosController < ApplicationController
     @livros = Livro.all
     
     if @livro.save
-      render json: @livros, status: :created, location: @livro
+      resp = []
+      @livros.each do | livro |
+        resp.push(
+          id:livro.id,
+          preco:livro.preco,
+          titulo:livro.titulo,
+          autor_id:livro.autor_id,
+          created_at:livro.created_at,
+          updated_at:livro.updated_at,
+          autor_name:livro.autor.nome
+        )
+      end
+      render json: resp, status: :created, location: @livro
     else
       render json: @livro.errors, status: :unprocessable_entity
     end
